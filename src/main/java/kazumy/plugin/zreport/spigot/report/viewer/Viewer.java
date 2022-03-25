@@ -8,6 +8,8 @@ public interface Viewer {
 
     int getId();
 
+    int getContributions();
+
     String getName();
 
     Reputation getReputation();
