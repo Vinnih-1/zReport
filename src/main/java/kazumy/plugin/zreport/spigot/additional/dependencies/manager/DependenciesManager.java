@@ -23,7 +23,8 @@ public class DependenciesManager {
     private final File file;
 
     public Optional<? extends Dependencies> missingAny() {
-        return Stream.of(new JDA4Server()).filter(dep -> Arrays.asList(file.list()).contains(dep)).findFirst();
+        if (!this.file.exists()) this.file.mkdirs();
+        return Stream.of(new JDA4Server()).filter(dep -> !Arrays.asList(file.list()).contains(dep.getName())).findFirst();
     }
 
     @SneakyThrows
@@ -37,6 +38,6 @@ public class DependenciesManager {
 
         Thread.sleep(2000);
         Bukkit.getConsoleSender().sendMessage(String.format("§a[zReport] §fDependência §e%s §fbaixada com êxito. Carregando-a...", name));
-        Bukkit.getPluginManager().enablePlugin(Bukkit.getPluginManager().loadPlugin(new File("./" + name + ".jar")));
+        Bukkit.getPluginManager().enablePlugin(Bukkit.getPluginManager().loadPlugin(new File("./plugins/zReport/dependencies/" + name + ".jar")));
     }
 }
