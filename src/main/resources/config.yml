@@ -20,8 +20,8 @@ bot:
 
 report:
   server: 'Lobby' # Caso esteja usando o zReport em um spigot, digite o servidor aqui
-  timeout: 3 # O tempo-limite que um report leva para expirar em minuto(s)
-  punicao-preventiva: # Sistema de punição preventiva
+  timeout: 5 # O tempo-limite que um report leva para expirar em minuto(s)
+  punicao-preventiva: # Sistema de punição preventiva (Requer zPunish)
     enable: false
     limite: 10 # Ao chegar no limite de punições, o jogador levará um auto-ban temporário (Requer zPunish)
     tempo: '20 m' # (s) [Segundo] (m) [Minuto] (d) [Dia]
@@ -36,41 +36,50 @@ mensagem-discord: # As mensagens que aparecerão no discord em uma seção separ
   embed:
     report:
       title: 'Novo Report'
-        thumbnail: 'https://minotar.net/avatar/%apelido/100.png'
-        footer-image: 'https://cdn.discordapp.com/icons/832601856403701771/94a08bab250ed87791c68bec4e7a4013.png'
-        footer: 'zPluginS © Todos os direitos reservados.'
-        builder:
-          1:
-            name: 'Apelido'
-            value: '%apelido'
-            inline: true
-          2:
-            name: 'Autor'
-            value: '%autor'
-            inline: true
-          3:
-            name: 'Motivo'
-            value: '%motivo'
-            inline: true
-          4:
-            name: 'Prova'
-            value: '%prova'
-            inline: false
-          5:
-            name: 'Servidor'
-            value: '%server'
-            inline: false
-          6:
-            name: 'Data'
-            value: '%data'
-            inline: false
+      thumbnail: 'https://minotar.net/avatar/%apelido/100.png'
+      footer-image: 'https://cdn.discordapp.com/icons/832601856403701771/94a08bab250ed87791c68bec4e7a4013.png'
+      footer: 'zPluginS © Todos os direitos reservados.'
+      builder:
+        1:
+          name: 'Apelido'
+          value: '%apelido'
+          inline: true
+        2:
+          name: 'Autor'
+          value: '%autor'
+          inline: true
+        3:
+          name: 'Motivo'
+          value: '%motivo'
+          inline: true
+        4:
+          name: 'Prova'
+          value: '%prova'
+          inline: false
+        5:
+          name: 'Servidor'
+          value: '%server'
+          inline: false
+        6:
+          name: 'Data'
+          value: '%data'
+          inline: false
 
 mensagem-server:
+  mensagens:
+    player-offline: '&c&lERRO &fEste jogador não está online!'
+    sem-permissao: '&c&lERRO &fVocê não pode usar este comando!'
+    sem-provas: '&c&lERRO &fVocê não pode denunciar sem provas!'
+    comando-bloqueado: '&c&lERRO &fImpossível executar comandos antes do denúncia!'
+    denunucia-enviada: '&a&lSUCESSO &fVocê enviou sua denúncia para nossa equipe!'
+    denuncia-aprovada: '&a&lSUCESSO &fGraças a você, nós punimos mais um jogador!'
+
   denuncia-prova-mensagem: # Mensagem de provas que aparecerá para o jogador que está efetuando a denúncia
     - ''
     - '&aInsira a o link das suas provas da denúncia.'
     - '&7Digite &nnenhuma&7 para não colocar provas.'
-  alerta: # Mensagem de report que irá aparecer para os staff's presentes no servidor.
+
+  alerta-staff-mensagem: # Mensagem de report que irá aparecer para os staff's presentes no servidor.
     - ''
     - '  &c&lREPORT'
     - '  &c%apelido &ffoi reportado por &c%autor'
