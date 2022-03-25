@@ -34,6 +34,7 @@ public class SQLProvider {
                 "    id         INTEGER      PRIMARY KEY AUTOINCREMENT,\n" +
                 "    nickname   VARCHAR (40) NOT NULL,\n" +
                 "    reputation VARCHAR (15) NOT NULL\n" +
+                "    contributions         INTEGER      NOT NULL,\n" +
                 ");");
 
         Bukkit.getConsoleSender().sendMessage("§a[zReport] §fConexão com o banco de dados §eSQLite §frealizada!");
