@@ -1,0 +1,8 @@
+/target/
+/.apt_generated/
+/.apt_generated_tests/
+/out/
+/dependency-reduced-pom.xml
+/.idea/
+/.gradle/
+/build/
