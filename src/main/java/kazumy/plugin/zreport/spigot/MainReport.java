@@ -3,8 +3,11 @@ package kazumy.plugin.zreport.spigot;
 import com.henryfabio.sqlprovider.executor.SQLExecutor;
 import kazumy.plugin.zreport.spigot.additional.dependencies.manager.DependenciesManager;
 import kazumy.plugin.zreport.spigot.additional.discord.DiscordBot;
+import kazumy.plugin.zreport.spigot.command.registry.CommandRegistry;
+import kazumy.plugin.zreport.spigot.configuration.registry.ConfigurationRegistry;
 import kazumy.plugin.zreport.spigot.database.SQLProvider;
 import kazumy.plugin.zreport.spigot.license.License;
+import kazumy.plugin.zreport.spigot.report.manager.ReportManager;
 import lombok.Getter;
 import lombok.val;
 import org.bukkit.Bukkit;
@@ -19,14 +22,20 @@ public class MainReport extends JavaPlugin {
 
     private SQLExecutor executor;
     private DiscordBot discord;
+    private ReportManager reportManager;
 
     @Override
     public void onEnable() {
-        Bukkit.getConsoleSender().sendMessage("§6███████╗██████╗ ███████╗██████╗  ██████╗ ██████╗ ████████╗");
-        Bukkit.getConsoleSender().sendMessage("§6╚══███╔╝██╔══██╗██╔════╝██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝");
-        Bukkit.getConsoleSender().sendMessage("§6  ███╔╝ ██████╔╝█████╗  ██████╔╝██║   ██║██████╔╝   ██║   ");
-        Bukkit.getConsoleSender().sendMessage("§6███████╗██║  ██║███████╗██║     ╚██████╔╝██║  ██║   ██║   ");
-
+        Bukkit.getConsoleSender().sendMessage(
+                "\n \n §6███████╗  ██████╗   ███████╗  ██████╗    ██████╗   ██████╗   ████████╗ \n"
+                    + "§6╚══███╔╝  ██╔══██╗  ██╔════╝  ██╔══██╗  ██╔═══██╗  ██╔══██╗  ╚══██╔══╝"
+                    + "§6  ███╔╝   ██████╔╝  █████╗    ██████╔╝  ██║   ██║  ██████╔╝     ██║   "
+                    + "§6███████╗  ██║  ██║  ███████╗  ██║       ╚██████╔╝  ██║  ██║     ██║   "
+                    + "§6╚══════╝  ╚═╝  ╚═╝  ╚══════╝  ╚═╝        ╚═════╝   ╚═╝  ╚═╝     ╚═╝   "
+                    + " \n"
+                    + "§a[zReport] §fIniciando o plugin, aguarde um momento... \n"
+        );
+        saveDefaultConfig();
         instance = this;
 
         if (!new License(getConfig().getString("license")).check()) {
@@ -37,10 +46,11 @@ public class MainReport extends JavaPlugin {
         dependenciesManager.missingAny().ifPresent(dependencies -> {
             dependenciesManager.downloadTo(dependencies.getName(), dependencies.getUrl());
         });
+        ConfigurationRegistry.of(this).register();
+        CommandRegistry.of(this).register();
 
         this.executor = SQLProvider.of(this).createDefaults();
         this.discord = DiscordBot.of(this).initialize();
-
-
+        this.reportManager = ReportManager.of(this).run();
     }
 }
