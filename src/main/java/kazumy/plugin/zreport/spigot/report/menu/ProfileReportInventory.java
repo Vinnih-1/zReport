@@ -31,19 +31,30 @@ public class ProfileReportInventory extends SimpleInventory {
 
         editor.setItem(20, InventoryItem.of(
                 new ItemBuilder(Material.getMaterial("STAINED_CLAY"), 1, (short)5)
-                        .name("Clique para Teleportar")
+                        .name("§aClique para Teleportar")
         ).defaultCallback(event  -> {
 
         }));
 
         editor.setItem(22, InventoryItem.of(
-                new ItemBuilder(Material.ENDER_PORTAL)
-                        .name("Fazer informaçoes do report, kazumy")
+                new ItemBuilder(Material.ENDER_PORTAL_FRAME)
+                        .name("§eInformações da Denúncia")
+                        .lore(
+                                "§fID: §7" + report.getData().getId(),
+                                "§fNome: §7" + report.getUser().getName(),
+                                "§fAutor: §7" + report.getAuthor().getName(),
+                                "",
+                                "§fMotivo: §7" + report.getData().getReason(),
+                                "§fPrioridade: " + report.getData().getPriority().getName(),
+                                "",
+                                "§fVezes: §e" + MainReport.getInstance().getReportManager().getAllReportsByName(this.report.getUser().getName()).size(),
+                                "§fServidor: §7" + report.getData().getServer()
+                        )
         ));
 
         editor.setItem(24, InventoryItem.of(
                 new ItemBuilder(Material.getMaterial("STAINED_CLAY"), 1, (short)14)
-                        .name("Clique para Cancelar")
+                        .name("§cClique para Cancelar")
         ).defaultCallback(event  -> {
             report.invalidateReport(MainReport.getInstance().getReportManager());
             event.getPlayer().sendMessage(MessageValue.get(MessageValue::deniedReport));
