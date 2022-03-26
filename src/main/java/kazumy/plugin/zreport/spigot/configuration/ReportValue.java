@@ -4,6 +4,7 @@ import com.henryfabio.minecraft.configinjector.common.annotations.ConfigField;
 import com.henryfabio.minecraft.configinjector.common.annotations.ConfigFile;
 import com.henryfabio.minecraft.configinjector.common.annotations.ConfigSection;
 import com.henryfabio.minecraft.configinjector.common.annotations.TranslateColors;
+import com.henryfabio.minecraft.configinjector.common.injector.ConfigurationInjectable;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.bukkit.configuration.ConfigurationSection;
@@ -15,7 +16,7 @@ import java.util.function.Function;
 @Getter @Accessors(fluent = true)
 @ConfigSection("report")
 @ConfigFile("config.yml")
-public class ReportValue {
+public class ReportValue implements ConfigurationInjectable {
 
     @Getter private static final ReportValue instance = new ReportValue();
 
