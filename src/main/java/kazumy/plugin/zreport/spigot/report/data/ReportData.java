@@ -8,7 +8,8 @@ import lombok.Data;
 @Builder(builderClassName = "build")
 public class ReportData {
 
-    private Integer id, amount;
+    private boolean approved;
+    private Integer id;
     private ReportType reportType;
     private String reason, evidence, server, date;
 }
