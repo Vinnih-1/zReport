@@ -28,11 +28,13 @@ public class ReportManager {
             currentReport.stream()
                     .filter(report -> LocalDateTime.now(ZoneId.of("America/Sao_Paulo")).minusMinutes(ReportValue.get(ReportValue::timeout))
                             .isAfter(LocalDateTime.parse(report.getData().getDate())))
-                    .collect(Collectors.toSet()).forEach(Report::invalidate);
+                    .collect(Collectors.toSet()).forEach(report -> report.invalidateReport(this));
         }, 0, 20L * 60);
 
         return this;
     }
 
-
+    public List<Report> getAllReportsByName(String name) {
+        return currentReport.stream().filter(report -> report.getUser().getName().equals(name)).collect(Collectors.toList());
+    }
 }
