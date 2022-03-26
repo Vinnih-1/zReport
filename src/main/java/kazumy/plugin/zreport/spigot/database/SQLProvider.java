@@ -27,14 +27,16 @@ public class SQLProvider {
                 "    reason   TEXT,\n" +
                 "    evidence TEXT,\n" +
                 "    server   TEXT,\n" +
+                "    type   TEXT,\n" +
+                "    approved   BOOLEAN,\n" +
                 "    date     DATETIME     NOT NULL\n" +
                 ");\n");
 
         executor.updateQuery("CREATE TABLE IF NOT EXISTS reputations (\n" +
                 "    id         INTEGER      PRIMARY KEY AUTOINCREMENT,\n" +
                 "    nickname   VARCHAR (40) NOT NULL,\n" +
-                "    reputation VARCHAR (15) NOT NULL\n" +
-                "    contributions         INTEGER      NOT NULL,\n" +
+                "    reputation VARCHAR (15) NOT NULL,\n" +
+                "    contributions         INTEGER      NOT NULL\n" +
                 ");");
 
         Bukkit.getConsoleSender().sendMessage("§a[zReport] §fConexão com o banco de dados §eSQLite §frealizada!");
