@@ -1,4 +1,4 @@
-package kazumy.plugin.zreport.spigot.report.type;
+package kazumy.plugin.zreport.spigot.report.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
