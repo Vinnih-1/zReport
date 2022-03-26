@@ -89,3 +89,5 @@ mensagem-server:
     - '  &fProva: &c%prova'
     - '  &fVezes: &c%vezes'
     - ''
+    - '  &fPrioridade: %prioridade'
+    - ''
