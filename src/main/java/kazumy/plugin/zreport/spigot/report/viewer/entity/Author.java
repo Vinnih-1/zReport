@@ -2,7 +2,7 @@ package kazumy.plugin.zreport.spigot.report.viewer.entity;
 
 import com.henryfabio.sqlprovider.executor.SQLExecutor;
 import kazumy.plugin.zreport.spigot.configuration.MessageValue;
-import kazumy.plugin.zreport.spigot.report.reputation.Reputation;
+import kazumy.plugin.zreport.spigot.report.enums.Reputation;
 import kazumy.plugin.zreport.spigot.report.viewer.impl.ViewerImpl;
 
 public class Author extends ViewerImpl  {
@@ -38,8 +38,8 @@ public class Author extends ViewerImpl  {
      */
     private Reputation getNewReputation() {
         if (this.getReputation() == Reputation.CONTRIBUTOR) return null;
-        if (this.getContributions() >= 50) return Reputation.CONTRIBUTOR;
-        if (this.getContributions() >= 15) return Reputation.MEDIAN;
+        if (this.getContributions() >= Reputation.CONTRIBUTOR.getRequiredContributions()) return Reputation.CONTRIBUTOR;
+        if (this.getContributions() >= Reputation.MEDIAN.getRequiredContributions()) return Reputation.MEDIAN;
 
         return Reputation.NONE;
     }
