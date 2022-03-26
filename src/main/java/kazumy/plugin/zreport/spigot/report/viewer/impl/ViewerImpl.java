@@ -1,7 +1,7 @@
 package kazumy.plugin.zreport.spigot.report.viewer.impl;
 
 import com.henryfabio.sqlprovider.executor.SQLExecutor;
-import kazumy.plugin.zreport.spigot.report.reputation.Reputation;
+import kazumy.plugin.zreport.spigot.report.enums.Reputation;
 import kazumy.plugin.zreport.spigot.report.viewer.Viewer;
 import kazumy.plugin.zreport.spigot.report.viewer.adapter.ViewerAdapter;
 import lombok.Data;

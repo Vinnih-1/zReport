@@ -1,6 +1,6 @@
 package kazumy.plugin.zreport.spigot.report.viewer;
 
-import kazumy.plugin.zreport.spigot.report.reputation.Reputation;
+import kazumy.plugin.zreport.spigot.report.enums.Reputation;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
