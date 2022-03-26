@@ -21,19 +21,20 @@ public class SQLProvider {
         val executor = new SQLExecutor(connector);
 
         executor.updateQuery("CREATE TABLE IF NOT EXISTS denunciations (\n" +
-                "    id       INTEGER      PRIMARY KEY AUTOINCREMENT,\n" +
+                "    id       TEXT,\n" +
                 "    nickname VARCHAR (40) NOT NULL,\n" +
                 "    author   VARCHAR (40) NOT NULL,\n" +
                 "    reason   TEXT,\n" +
                 "    evidence TEXT,\n" +
                 "    server   TEXT,\n" +
                 "    type   TEXT,\n" +
+                "    priority   TEXT,\n" +
                 "    approved   BOOLEAN,\n" +
                 "    date     DATETIME     NOT NULL\n" +
                 ");\n");
 
         executor.updateQuery("CREATE TABLE IF NOT EXISTS reputations (\n" +
-                "    id         INTEGER      PRIMARY KEY AUTOINCREMENT,\n" +
+                "    id         TEXT,\n" +
                 "    nickname   VARCHAR (40) NOT NULL,\n" +
                 "    reputation VARCHAR (15) NOT NULL,\n" +
                 "    contributions         INTEGER      NOT NULL\n" +
