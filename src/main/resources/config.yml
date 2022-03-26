@@ -71,8 +71,10 @@ mensagem-server:
     sem-permissao: '&c&lERRO &fVocê não pode usar este comando!'
     sem-provas: '&c&lERRO &fVocê não pode denunciar sem provas!'
     comando-bloqueado: '&c&lERRO &fImpossível executar comandos antes do denúncia!'
+    denuncia-nao-encontrada: '&c&lERRO &fNão há nenhuma denúncia pendente sobre este jogador!'
     denunucia-enviada: '&a&lSUCESSO &fVocê enviou sua denúncia para nossa equipe!'
     denuncia-aprovada: '&a&lSUCESSO &fGraças a você, nós punimos mais um jogador!'
+    denuncia-recusada: '&a&lSUCESSO &fVocê recusou esta denúncia!'
 
   denuncia-prova-mensagem: # Mensagem de provas que aparecerá para o jogador que está efetuando a denúncia
     - ''

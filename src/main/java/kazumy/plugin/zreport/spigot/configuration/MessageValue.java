@@ -20,11 +20,13 @@ public class MessageValue implements ConfigurationInjectable {
     @Getter private static final MessageValue instance = new MessageValue();
 
     @ConfigField("mensagens.player-offline") private String offlinePlayer;
+    @ConfigField("mensagens.denuncia-nao-encontrada") private String reportNotFounded;
     @ConfigField("mensagens.sem-permissao") private String withoutPermission;
     @ConfigField("mensagens.sem-provas") private String withoutEvidence;
     @ConfigField("mensagens.comando-bloqueado") private String blockedCommand;
     @ConfigField("mensagens.denunucia-enviada") private String sendedReport;
     @ConfigField("mensagens.denunucia-aprovada") private String approvedReport;
+    @ConfigField("mensagens.denuncia-recusada") private String deniedReport;
     @ConfigField("denuncia-prova-mensagem") private List<String> evidenceMessage;
     @ConfigField("alerta-staff-mensagem") private List<String> reportAlertMessage;
 
