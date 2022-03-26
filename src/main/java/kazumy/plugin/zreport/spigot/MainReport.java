@@ -7,6 +7,7 @@ import kazumy.plugin.zreport.spigot.command.registry.CommandRegistry;
 import kazumy.plugin.zreport.spigot.configuration.registry.ConfigurationRegistry;
 import kazumy.plugin.zreport.spigot.database.SQLProvider;
 import kazumy.plugin.zreport.spigot.license.License;
+import kazumy.plugin.zreport.spigot.listener.EventListener;
 import kazumy.plugin.zreport.spigot.report.manager.ReportManager;
 import lombok.Getter;
 import lombok.val;
@@ -48,6 +49,8 @@ public class MainReport extends JavaPlugin {
         });
         ConfigurationRegistry.of(this).register();
         CommandRegistry.of(this).register();
+
+        new EventListener(this);
 
         this.executor = SQLProvider.of(this).createDefaults();
         this.discord = DiscordBot.of(this).initialize();
