@@ -38,14 +38,9 @@ public class Author extends ViewerImpl  {
      */
     private Reputation getNewReputation() {
         if (this.getReputation() == Reputation.CONTRIBUTOR) return null;
+        if (this.getContributions() >= 50) return Reputation.CONTRIBUTOR;
+        if (this.getContributions() >= 15) return Reputation.MEDIAN;
 
-        switch (this.getContributions()) {
-            case 50:
-                return Reputation.CONTRIBUTOR;
-            case 15:
-                return Reputation.MEDIAN;
-            default:
-                return Reputation.NONE;
-        }
+        return Reputation.NONE;
     }
 }
