@@ -3,6 +3,7 @@ package kazumy.plugin.zreport.spigot.command.registry;
 import kazumy.plugin.zreport.spigot.MainReport;
 import kazumy.plugin.zreport.spigot.command.ReportCMD;
 import kazumy.plugin.zreport.spigot.command.ReportInfoCMD;
+import kazumy.plugin.zreport.spigot.command.ReportsCMD;
 import lombok.Data;
 import lombok.val;
 import me.saiintbrisson.bukkit.command.BukkitFrame;
@@ -14,6 +15,6 @@ public class CommandRegistry {
 
     public void register() {
         val frame = new BukkitFrame(plugin);
-        frame.registerCommands(new ReportCMD(), new ReportInfoCMD());
+        frame.registerCommands(new ReportCMD(), new ReportsCMD(), new ReportInfoCMD());
     }
 }
