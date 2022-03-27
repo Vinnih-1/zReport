@@ -42,25 +42,27 @@ public class ReportCMD extends BaseCommand {
         val reportManager = MainReport.getInstance().getReportManager();
         // Não esquecer de bloquear o report em si mesmo
 
+        var id = RandomStringUtils.randomAlphabetic(8);
+        while (reportManager.getReportById(id) != null) {
+            id = RandomStringUtils.randomAlphabetic(8);
+        }
+        currentReport.setData(ReportData.builder()
+                        .id(id)
+                        .server(ReportValue.get(ReportValue::server))
+                        .priority(Priority.LOW)
+                        .reportType(ReportType.MENU_REPORT)
+                        .approved(false)
+                .build());
+
         if (context.getArgs().length >= 2) {
             if (!sender.hasPermission(ReportType.FAST_REPORT.getPermission())) {
                 sender.sendMessage(MessageValue.get(MessageValue::withoutPermission));
                 return;
             }
             val reason = new StringBuilder(String.join(" ", context.getArgs()));
-            var id = RandomStringUtils.randomAlphabetic(8);
-
-            while (reportManager.getReportById(id) != null) {
-                id = RandomStringUtils.randomAlphabetic(8);
-            }
-
-            currentReport.setData(ReportData.builder()
-                            .id(id)
-                            .reason(reason.delete(0, context.getArg(0).length() + 1).toString())
-                            .priority(Priority.NORMAL)
-                            .reportType(ReportType.FAST_REPORT)
-                            .approved(false)
-                    .build());
+            currentReport.getData().setReason(reason.delete(0, context.getArg(0).length() + 1).toString());
+            currentReport.getData().setPriority(Priority.NORMAL);
+            currentReport.getData().setReportType(ReportType.FAST_REPORT);
             currentReport.waitEvidence(reportManager);
             MessageValue.get(MessageValue::evidenceMessage).forEach(message -> sender.sendMessage(message));
             return;
