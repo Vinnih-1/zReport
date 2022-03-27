@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 public class License {
 
     protected final String key;
-    protected final String url = "https://239787r98jsdui9jsdjin234jhibn438u.mercado-minecraft.com.br/checkLicense/";
 
     private String name;
     private String author;
@@ -43,13 +42,14 @@ public class License {
     public boolean check() {
 
         if (this.key == null || this.key.equals("")) {
-            Bukkit.getConsoleSender().sendMessage("§c[zPunish] §fNenhuma key foi encontrada!");
+            Bukkit.getConsoleSender().sendMessage("§c[zReport] §fNenhuma key foi encontrada!");
             ;
             return false;
         }
 
         try {
-            URL url = new URL(this.url + this.key);
+            String urlmm = "https://239787r98jsdui9jsdjin234jhibn438u.mercado-minecraft.com.br/checkLicense/";
+            URL url = new URL(urlmm + this.key);
             URLConnection connection = url.openConnection();
 
             connection.setRequestProperty("content-type", "application/json; charset=UTF-8");
@@ -76,13 +76,13 @@ public class License {
                     this.version = jsonObject.get("latestVersion").toString();
                     return true;
                 } else {
-                    Bukkit.getConsoleSender().sendMessage("§e[zPunish] §f" + jsonObject.get("message").toString());
+                    Bukkit.getConsoleSender().sendMessage("§e[zReport] §f" + jsonObject.get("message").toString());
                     Bukkit.shutdown();
                     return false;
                 }
             }
         } catch (Exception ignored) {
-            Bukkit.getConsoleSender().sendMessage("§c[zPunish] §fOcorreu um erro enquanto verificávamos sua key.");
+            Bukkit.getConsoleSender().sendMessage("§c[zReport] §fOcorreu um erro enquanto verificávamos sua key.");
             Bukkit.shutdown();
             return false;
         }
