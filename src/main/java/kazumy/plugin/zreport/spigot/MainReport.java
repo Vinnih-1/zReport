@@ -1,5 +1,6 @@
 package kazumy.plugin.zreport.spigot;
 
+import com.henryfabio.minecraft.inventoryapi.manager.InventoryManager;
 import com.henryfabio.sqlprovider.executor.SQLExecutor;
 import kazumy.plugin.zreport.spigot.additional.dependencies.manager.DependenciesManager;
 import kazumy.plugin.zreport.spigot.additional.discord.DiscordBot;
@@ -50,6 +51,7 @@ public class MainReport extends JavaPlugin {
         ConfigurationRegistry.of(this).register();
         CommandRegistry.of(this).register();
 
+        InventoryManager.enable(this);
         new EventListener(this);
 
         this.executor = SQLProvider.of(this).createDefaults();
