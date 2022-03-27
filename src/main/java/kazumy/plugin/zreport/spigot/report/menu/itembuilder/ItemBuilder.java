@@ -3,6 +3,7 @@ package kazumy.plugin.zreport.spigot.report.menu.itembuilder;
 import lombok.val;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
 
@@ -23,6 +24,13 @@ public class ItemBuilder extends ItemStack {
     public ItemBuilder name(String name) {
         val meta = this.getItemMeta();
         meta.setDisplayName(name);
+        this.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder owner(String owner) {
+        val meta = (SkullMeta) this.getItemMeta();
+        meta.setOwner(owner);
         this.setItemMeta(meta);
         return this;
     }
