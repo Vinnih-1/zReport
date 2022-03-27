@@ -3,7 +3,6 @@ package kazumy.plugin.zreport.spigot.report;
 import com.henryfabio.sqlprovider.executor.SQLExecutor;
 import kazumy.plugin.zreport.spigot.MainReport;
 import kazumy.plugin.zreport.spigot.configuration.MessageValue;
-import kazumy.plugin.zreport.spigot.configuration.ReportValue;
 import kazumy.plugin.zreport.spigot.report.data.ReportData;
 import kazumy.plugin.zreport.spigot.report.manager.ReportManager;
 import kazumy.plugin.zreport.spigot.report.viewer.entity.Author;
@@ -17,7 +16,6 @@ import org.bukkit.Bukkit;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 @Data
@@ -49,10 +47,6 @@ public class Report {
         return this;
     }
 
-    public Optional<Report> findReport(ReportManager reportManager) {
-        return reportManager.getCurrentReport().stream().filter(report -> report.getUser().getName().equals(this.getUser().getName())).findFirst();
-    }
-
     /**
      * Deixa a denúncia pendente para fiscalização da equipe responsável,
      * e alerta todos que estiverem presente
@@ -72,9 +66,9 @@ public class Report {
                             .replace("%motivo", this.getData().getReason())
                             .replace("%prova", this.getData().getEvidence())
                             .replace("%prioridade", this.getData().getPriority().getName())
-                            .replace("%vezes", String.valueOf(reportManager.getAllReportsByName(this.getUser().getName()).size())));
+                            .replace("%vezes", String.valueOf(this.getUser().getAllReportsEnabled(reportManager).size())));
                     alertMessage.forEach(message -> player.sendMessage(message));
-                    val component = new TextComponent("  §aClique §a§naqui§a para visualizar");
+                    val component = new TextComponent("  §eClique §e§naqui§e para visualizar");
                     component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/reportinfo " + this.getUser().getName()));
                     player.spigot().sendMessage(component);
                 });
@@ -94,7 +88,6 @@ public class Report {
             this.getData().setEvidence("Nenhuma");
         } else this.getData().setEvidence(evidence);
         this.getData().setDate(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")).toString());
-        this.getData().setServer(ReportValue.get(ReportValue::server));
         this.getAuthor().toPlayer().sendMessage(MessageValue.get(MessageValue::sendedReport));
         this.enableReport(MainReport.getInstance().getReportManager());
     }
@@ -114,8 +107,8 @@ public class Report {
      * Executado quando algum staff invalida o report,
      * ou quando o report é expirado pelo tempo.
      */
-    public void invalidateReport(ReportManager reportManager) {
-        reportManager.getAllReportsByName(this.getUser().getName()).forEach(reportManager.getCurrentReport()::remove);
+    public void disableReport(ReportManager reportManager) {
+        this.user.getAllReportsEnabled(reportManager).forEach(reportManager.getCurrentReport()::remove);
     }
 
     /**
@@ -125,7 +118,7 @@ public class Report {
      * @param executor Instância da classe SQLExecutor
      */
     public void approveReportInDatabase(SQLExecutor executor, ReportManager reportManager) {
-        reportManager.getAllReportsByName(this.getUser().getName()).forEach(report -> {
+        this.user.getAllReportsEnabled(reportManager).forEach(report -> {
             executor.updateQuery("UPDATE denunciations SET approved = ? WHERE nickname = ?", s -> {
                 s.set(1, this.getData().isApproved());
                 s.set(2, this.getUser().getName().toLowerCase());
@@ -148,7 +141,7 @@ public class Report {
             s.set(6, this.getData().getServer());
             s.set(7, this.getData().getReportType().toString());
             s.set(8, this.getData().getPriority().toString());
-            s.set(9, this.getData().isApproved());
+            s.set(9, String.valueOf(this.getData().isApproved()));
             s.set(10, this.getData().getDate());
         });
     }
