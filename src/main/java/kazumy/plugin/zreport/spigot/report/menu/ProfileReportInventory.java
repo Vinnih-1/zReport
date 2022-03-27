@@ -7,6 +7,7 @@ import com.henryfabio.minecraft.inventoryapi.viewer.Viewer;
 import kazumy.plugin.zreport.spigot.MainReport;
 import kazumy.plugin.zreport.spigot.configuration.MessageValue;
 import kazumy.plugin.zreport.spigot.report.Report;
+import kazumy.plugin.zreport.spigot.report.manager.ReportManager;
 import kazumy.plugin.zreport.spigot.report.menu.itembuilder.ItemBuilder;
 import org.bukkit.Material;
 
@@ -24,14 +25,15 @@ public class ProfileReportInventory extends SimpleInventory {
         editor.setItem(4, InventoryItem.of(
                 new ItemBuilder(Material.SKULL_ITEM, 1, (short)3)
                         .name(String.format("§aPerfil de %s", report.getUser().getName()))
+                        .owner(this.report.getUser().getName())
                         .lore("", "§eClique para mais Informações")
         ).defaultCallback(event -> {
-
+            new PlayerReportInventory(report).openInventory(event.getPlayer());
         }));
 
         editor.setItem(20, InventoryItem.of(
                 new ItemBuilder(Material.getMaterial("STAINED_CLAY"), 1, (short)5)
-                        .name("§aClique para Teleportar")
+                        .name("§aClique para aplicar Punição")
         ).defaultCallback(event  -> {
 
         }));
@@ -45,18 +47,30 @@ public class ProfileReportInventory extends SimpleInventory {
                                 "§fAutor: §7" + report.getAuthor().getName(),
                                 "",
                                 "§fMotivo: §7" + report.getData().getReason(),
-                                "§fPrioridade: " + report.getData().getPriority().getName(),
+                                "§fProva: §7" + report.getData().getEvidence(),
                                 "",
-                                "§fVezes: §e" + MainReport.getInstance().getReportManager().getAllReportsByName(this.report.getUser().getName()).size(),
-                                "§fServidor: §7" + report.getData().getServer()
+                                "§fPrioridade: " + report.getData().getPriority().getName(),
+                                "§fData: §e" + ReportManager.formattedDate(report.getData().getDate()),
+                                "",
+                                "§fVezes: §e" + this.report.getUser().getAllReportsEnabled(MainReport.getInstance().getReportManager()).size(),
+                                "§fServidor: §7" + report.getData().getServer(),
+                                "",
+                                "§aClique para Teleportar"
                         )
-        ));
+        ).defaultCallback(event -> {
+            if (this.report.getUser().toPlayer() == null) {
+                event.getPlayer().sendMessage(MessageValue.get(MessageValue::offlinePlayer));
+                return;
+            }
+            this.report.getAuthor().toPlayer().teleport(this.report.getUser().toPlayer());
+        }));
 
         editor.setItem(24, InventoryItem.of(
                 new ItemBuilder(Material.getMaterial("STAINED_CLAY"), 1, (short)14)
                         .name("§cClique para Cancelar")
         ).defaultCallback(event  -> {
-            report.invalidateReport(MainReport.getInstance().getReportManager());
+            event.getPlayer().closeInventory();
+            report.disableReport(MainReport.getInstance().getReportManager());
             event.getPlayer().sendMessage(MessageValue.get(MessageValue::deniedReport));
         }));
     }

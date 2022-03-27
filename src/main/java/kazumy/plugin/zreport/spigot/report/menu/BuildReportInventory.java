@@ -4,6 +4,8 @@ import com.henryfabio.minecraft.inventoryapi.editor.InventoryEditor;
 import com.henryfabio.minecraft.inventoryapi.inventory.impl.simple.SimpleInventory;
 import com.henryfabio.minecraft.inventoryapi.item.InventoryItem;
 import com.henryfabio.minecraft.inventoryapi.viewer.Viewer;
+import kazumy.plugin.zreport.spigot.MainReport;
+import kazumy.plugin.zreport.spigot.configuration.MessageValue;
 import kazumy.plugin.zreport.spigot.report.Report;
 import kazumy.plugin.zreport.spigot.report.menu.itembuilder.ItemBuilder;
 import org.bukkit.Material;
@@ -22,26 +24,27 @@ public class BuildReportInventory extends SimpleInventory {
         editor.setItem(4, InventoryItem.of(
                 new ItemBuilder(Material.SKULL_ITEM, 1, (short)3)
                         .name(String.format("§aPerfil de %s", report.getUser().getName()))
+                        .owner(this.report.getUser().getName())
                         .lore("", "§eClique para mais Informações")
         ).defaultCallback(event -> {
-
+            new PlayerReportInventory(report).openInventory(event.getPlayer());
         }));
 
-        editor.setItem(20, InventoryItem.of(
+        editor.setItem(19, InventoryItem.of(
                 new ItemBuilder(Material.BOOK)
                         .name("§aSelecionar motivo da Denúncia")
         ).defaultCallback(event  -> {
-            // Fazer menu de motivos das denúncias
+            new ReasonReportInventory(report).openInventory(event.getPlayer());
         }));
 
-        editor.setItem(21, InventoryItem.of(
+        editor.setItem(20, InventoryItem.of(
                 new ItemBuilder(Material.FEATHER)
                         .name("§aSelecionar prioridade da Denúncia")
         ).defaultCallback(event  -> {
-            // Fazer menu de prioridades das denúncias
+            new PriorityReportInventory(report).openInventory(event.getPlayer());
         }));
 
-        editor.setItem(23, InventoryItem.of(
+        editor.setItem(22, InventoryItem.of(
                 new ItemBuilder(Material.ENDER_PORTAL_FRAME)
                         .name("§eInformações da Denúncia")
                         .lore(
@@ -49,7 +52,7 @@ public class BuildReportInventory extends SimpleInventory {
                                 "§fNome: §7" + report.getUser().getName(),
                                 "§fAutor: §7" + report.getAuthor().getName(),
                                 "",
-                                "§fMotivo: §7" + report.getData().getReason() == null ? "Não Especificado" : report.getData().getReason(),
+                                "§fMotivo: §7" + (report.getData().getReason() == null ? "Não Especificado" : report.getData().getReason()),
                                 "",
                                 "§fPrioridade: " + report.getData().getPriority().getName(),
                                 "§fServidor: §7" + report.getData().getServer(),
@@ -57,6 +60,17 @@ public class BuildReportInventory extends SimpleInventory {
                                 "§eSua denúncia ficará assim para nós"
                         )
         ));
+
+        if (this.report.getData().getReason() != null) {
+            editor.setItem(24, InventoryItem.of(
+                    new ItemBuilder(Material.getMaterial("STAINED_CLAY"), 1, (short)5)
+                            .name("§aEnviar sua Denúncia")
+            ).defaultCallback(event  -> {
+                event.getPlayer().closeInventory();
+                this.report.waitEvidence(MainReport.getInstance().getReportManager());
+                MessageValue.get(MessageValue::evidenceMessage).forEach(message -> event.getPlayer().sendMessage(message));
+            }));
+        }
 
         editor.setItem(25, InventoryItem.of(
                 new ItemBuilder(Material.getMaterial("STAINED_CLAY"), 1, (short)14)
