@@ -38,6 +38,8 @@ public class DependenciesManager {
 
         Thread.sleep(2000);
         Bukkit.getConsoleSender().sendMessage(String.format("§a[zReport] §fDependência §e%s §fbaixada com êxito. Carregando-a...", name));
-        Bukkit.getPluginManager().enablePlugin(Bukkit.getPluginManager().loadPlugin(new File("./plugins/zReport/dependencies/" + name + ".jar")));
+        if (Bukkit.getPluginManager().getPlugin(name) == null)
+            Bukkit.getPluginManager().enablePlugin(Bukkit.getPluginManager().loadPlugin(new File("./plugins/zReport/dependencies/" + name + ".jar")));
+        else Bukkit.getConsoleSender().sendMessage("§e[zReport] §fA dependência já está carregada, continuando...");
     }
 }
