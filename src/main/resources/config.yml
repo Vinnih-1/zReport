@@ -21,11 +21,6 @@ bot:
 report:
   server: 'Lobby' # Caso esteja usando o zReport em um spigot, digite o servidor aqui
   timeout: 5 # O tempo-limite que um report leva para expirar em minuto(s)
-  punicao-preventiva: # Sistema de punição preventiva (Requer zPunish)
-    enable: false
-    limite: 10 # Ao chegar no limite de punições, o jogador levará um auto-ban temporário (Requer zPunish)
-    tempo: '20 m' # (s) [Segundo] (m) [Minuto] (d) [Dia]
-    motivo: 'Punição Preventiva'
   motivos: # Lista de motivos que irão aparecer para o usuário quando estiver efetuando uma denúncia.
     - 'Uso de Hack'
     - 'Abuso de Bugs'
