@@ -3,6 +3,7 @@ package kazumy.plugin.zreport.spigot.report;
 import com.henryfabio.sqlprovider.executor.SQLExecutor;
 import kazumy.plugin.zreport.spigot.MainReport;
 import kazumy.plugin.zreport.spigot.configuration.MessageValue;
+import kazumy.plugin.zreport.spigot.listener.custom.ReportCustomEvent;
 import kazumy.plugin.zreport.spigot.report.data.ReportData;
 import kazumy.plugin.zreport.spigot.report.manager.ReportManager;
 import kazumy.plugin.zreport.spigot.report.viewer.entity.Author;
@@ -72,6 +73,7 @@ public class Report {
                     component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/reportinfo " + this.getUser().getName()));
                     player.spigot().sendMessage(component);
                 });
+        Bukkit.getPluginManager().callEvent(new ReportCustomEvent(reportManager.getCurrentReport(), this));
     }
 
     /**
