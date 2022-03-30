@@ -32,30 +32,38 @@ mensagem-discord: # As mensagens que aparecerão no discord em uma seção separ
     report:
       title: 'Novo Report'
       thumbnail: 'https://minotar.net/avatar/%apelido/100.png'
-      footer-image: 'https://cdn.discordapp.com/icons/832601856403701771/94a08bab250ed87791c68bec4e7a4013.png'
+      footer-image: 'https://i.imgur.com/r4Y1aMLh.jpg'
       footer: 'zPluginS © Todos os direitos reservados.'
       builder:
         1:
+          name: 'ID'
+          value: '%id'
+          inline: true
+        2:
           name: 'Apelido'
           value: '%apelido'
           inline: true
-        2:
+        3:
           name: 'Autor'
           value: '%autor'
           inline: true
-        3:
+        4:
           name: 'Motivo'
           value: '%motivo'
-          inline: true
-        4:
-          name: 'Prova'
-          value: '%prova'
           inline: false
         5:
+          name: 'Prioridade'
+          value: '%prioridade'
+          inline: true
+        6:
+          name: 'Prova'
+          value: '%prova'
+          inline: true
+        7:
           name: 'Servidor'
           value: '%server'
           inline: false
-        6:
+        8:
           name: 'Data'
           value: '%data'
           inline: false
