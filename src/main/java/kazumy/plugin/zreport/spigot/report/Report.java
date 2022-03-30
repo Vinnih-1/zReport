@@ -74,6 +74,7 @@ public class Report {
                     player.spigot().sendMessage(component);
                 });
         Bukkit.getPluginManager().callEvent(new ReportCustomEvent(reportManager.getCurrentReport(), this));
+        MainReport.getInstance().getDiscord().discordNotify(this);
     }
 
     /**
